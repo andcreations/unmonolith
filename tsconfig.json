@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "paths": {
+      "@unmonolith/common": ["src/common"],
+      "@unmonolith/transport": ["src/transport"],
+      "@unmonolith/gateway-common": ["src/gateway-common"],
+
+      "@unmonolith/users-common": ["src/domains/users/common"],
+      "@unmonolith/users-crud-service-api": ["src/domains/users/services/crud/service-api"],
+        
+      "@unmonolith/users-auth-service-api": ["src/domains/users/services/auth/service-api"],
+      "@unmonolith/users-auth-gateway-api": ["src/domains/users/services/auth/gateway-api"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
