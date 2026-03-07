@@ -1,9 +1,9 @@
 import { TopicParams, validateParam } from './topic.builder';
 
-export function buildRequestTopic(params: TopicParams): string {
+export function buildEventTopic(params: TopicParams): string {
   Object.values(params).forEach(validateParam);
   return (
     `${params.domain}_${params.service}_` +
-    `${params.method}$request_${params.version}`
+    `${params.method}$event_${params.version}`
   );
 }

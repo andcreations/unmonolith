@@ -9,23 +9,38 @@ import {
   SignInV1Response,
 } from '@unmonolith/users-auth-service-api';
 
+import { UsersAuthEventTransporter } from '../transporters';
+
 @Injectable()
 export class UsersAuthService {
   public constructor(
-    private readonly usersManagerTransporter: UsersManagerRequestTransporter,
+    private readonly usersManagerRequestTransporter:
+      UsersManagerRequestTransporter,
+    private readonly usersAuthEventTransporter:
+      UsersAuthEventTransporter,
   ) {}
 
   public async signIn(
     request: SignInV1Request,
     context: Context,
   ): Promise<SignInV1Response> {
-    const response = await this.usersManagerTransporter.readUserByEmailV1(
+    const {
+      user
+    } = await this.usersManagerRequestTransporter.readUserByEmailV1(
       { email: request.email },
       context,
     );
-    if (response.user.password !== request.password) {
+    if (user.password !== request.password) {
       throw new UnauthorizedException('Invalid password');
     }
+
+    await this.usersAuthEventTransporter.userSignedInV1(
+      { 
+        userId: user.id, 
+        email: user.email,
+      },
+      context,
+    );
 
     return {
       accessToken: v4(),
