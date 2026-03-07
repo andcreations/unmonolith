@@ -1,22 +1,17 @@
 import { Module } from '@nestjs/common';
-import { HTTPRequestTransporter } from '@unmonolith/transport';
+import { LocalRequestTransporter } from '@unmonolith/transport';
+import { UsersManagerAPIModule } from '@unmonolith/users-manager-service-api';
 
 import { UsersAuthService } from './services';
-import { UsersAuthController } from './controllers';
-import { UsersCrudAPIModule } from '../../crud/service-api';
+import { UsersAuthRequestController } from './controllers';
 
 @Module({
   imports: [
-    UsersCrudAPIModule.forRoot({
-      requestTransporter: HTTPRequestTransporter.forFeature({
-        host: 'localhost',
-        port: 8080,
-      }),
-    }),
+    UsersManagerAPIModule.forRoot({}),
   ],
   providers: [
     UsersAuthService,
-    UsersAuthController,
+    UsersAuthRequestController,
   ],
   exports: [],
 })

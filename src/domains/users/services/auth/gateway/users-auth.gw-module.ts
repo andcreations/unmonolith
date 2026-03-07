@@ -11,9 +11,7 @@ import { UsersAuthGWController } from './controllers';
       requestTransporter: LocalRequestTransporter.forFeature(),
     }),
   ],
-  providers: [
-    UsersAuthGWService,
-  ],
+  providers: [UsersAuthGWService],
   controllers: [UsersAuthGWController],
 })
 export class UsersAuthGWModule {}

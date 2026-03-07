@@ -1,12 +1,11 @@
 import { DynamicModule, Module, Type } from '@nestjs/common';
-import { RequestTransporter } from '@unmonolith/transport';
+import { resolveRequestTransporter } from '@unmonolith/transport';
 
+import { USERS_AUTH_DOMAIN, USERS_AUTH_SERVICE } from './domain-and-service';
 import { USERS_AUTH_TRANSPORTER_TOKEN } from './inject-tokens';
-import { UsersAuthTransporter } from './users-auth.transporter';
+import { UsersAuthRequestTransporter } from './users-auth.request-transporter';
 
-export interface UsersAuthAPIModuleOptions {
-  requestTransporter: RequestTransporter;
-}
+export interface UsersAuthAPIModuleOptions {}
 
 @Module({})
 export class UsersAuthAPIModule {
@@ -18,12 +17,15 @@ export class UsersAuthAPIModule {
       providers: [
         {
           provide: USERS_AUTH_TRANSPORTER_TOKEN,
-          useValue: options.requestTransporter,
+          useValue: resolveRequestTransporter(
+            USERS_AUTH_DOMAIN,
+            USERS_AUTH_SERVICE,
+          ),
         },
-        UsersAuthTransporter,
+        UsersAuthRequestTransporter,
       ],
       exports: [
-        UsersAuthTransporter,
+        UsersAuthRequestTransporter,
       ],
     };
   }

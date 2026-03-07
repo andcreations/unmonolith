@@ -1,1 +1,1 @@
-export * from './UsersAuthController';
+export * from './users-auth.request-controller';
