@@ -8,7 +8,6 @@ import {
 import { EventControllerClass } from '../types'
 
 export const EventController = (): ClassDecorator => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   return (target: Function) => {
     const controllerClass = target as EventControllerClass
     addEventControllerSpec({
