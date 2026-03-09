@@ -73,18 +73,18 @@ Typically, events are sent using event streaming platforms (e.g. Kafka). In this
 
 ## The code
 
-The code in `src` encompasses the common packages:
+The code in `src` contains the shared packages:
 - `@unmonolith/common` in `src/common`
 - `@unmonolith/gateway-common` in `src/gateway-common`
 - `@unmonolith/transport` in `src/transport`
 
 The `@unmonolith/transport` package contains:
-- The request transporters `LocalRequestTransporter` and `HTTPRequestTransporter`,
-- The request decorators `TransportController` and `RequestHandler` which are used in the controllers handling the requests defined in the service API.
-- The event transporters `LocalEventTransporter` and `DefaultEventTransporter` for services emitting events.
-- The event decorators `EventController` and `EventHandler` which are used in the controllers listing to events emitted by other services.
+- request transporters, `LocalRequestTransporter` and `HTTPRequestTransporter`
+- request decorators, `TransportController` and `RequestHandler`, used in controllers that handle the requests defined in a service API
+- event transporters, `LocalEventTransporter` and `DefaultEventTransporter`, for services that emit events
+- event decorators, `EventController` and `EventHandler`, used in controllers that listen to events emitted by other services
 
-There is just one domain implemented `users`. It contains 3 services:
-- `manager` which provides an API and a dummy implementation to create and read users,
-- `auth` - which allows a user to sign in. This service contains a gateway which sends requests to the service. The service in turn sends requests to the `manager` service to read the user signing in. It also emits an event that a user signed in.
-- `logger` which listens to the user-signed-in event and log it to the console.
+Currently, only one domain is implemented: `users`. It contains three services:
+- `manager`, which provides an API and a dummy implementation for creating and reading users
+- `auth`, which allows users to sign in; its gateway sends requests to the `auth` service, which then calls the `manager` service to read the signing-in user and emits an event when a user signs in
+- `logger`, which listens to the user-signed-in event and logs it to the console
